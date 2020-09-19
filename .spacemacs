@@ -522,6 +522,7 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+
   ;; key binds to quickly change windows
   (define-key evil-normal-state-map (kbd "C-.") #'other-window)
   (define-key evil-normal-state-map (kbd "C-,") #'prev-window)
