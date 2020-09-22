@@ -52,7 +52,8 @@ This function should only modify configuration layer settings."
      spell-checking
      syntax-checking
      version-control
-     treemacs)
+     treemacs
+     )
 
 
    ;; List of additional packages that will be installed without being
@@ -71,7 +72,8 @@ This function should only modify configuration layer settings."
      circadian
      jedi
      elpy
-     treemacs-evil)
+     treemacs-evil
+     )
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -523,6 +525,9 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;; org mode key binds to quickly jump to various org files
+  (global-set-key (kbd "C-c o") 
+                  (lambda () (interactive) (find-file "~/Notes/organizer.org")))
 
   ;; key binds to quickly change windows
   (define-key evil-normal-state-map (kbd "C-.") #'other-window)
@@ -544,7 +549,7 @@ before packages are loaded."
   ;; transparent background on startup
   (spacemacs/toggle-transparency)
 
-  ;; highlighting characters afters after line length reaches 80 in various modes
+  ;; highlighting characters afters after line length reaches 80 in programming modes
   (setq-default
    whitespace-line-column 80
    whitespace-style       '(face lines-tail))
@@ -594,6 +599,7 @@ This function is called at the very end of Spacemacs initialization."
  '(jdee-db-requested-breakpoint-face-colors (cons "#0d1011" "#b8bb26"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#0d1011" "#928374"))
  '(objed-cursor-color "#fb4934")
+ '(org-agenda-files (quote ("~/Notes/todo.org")))
  '(package-selected-packages
    (quote
     (yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic helm-pydoc helm-gtags helm-cscope helm xcscope helm-core ggtags dap-mode posframe bui cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic doom-themes yasnippet-snippets ws-butler writeroom-mode winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smex restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file nameless mwim move-text mmm-mode markdown-toc macrostep lsp-ui lsp-treemacs lsp-origami lsp-ivy lorem-ipsum link-hint jedi ivy-yasnippet ivy-xref ivy-purpose ivy-hydra indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helm-make google-translate golden-ratio gnuplot gh-md fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elpy elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word counsel-projectile column-enforce-mode clean-aindent-mode circadian centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ac-ispell)))
