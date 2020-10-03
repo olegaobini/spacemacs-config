@@ -31,6 +31,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     javascript
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -41,9 +42,9 @@ This function should only modify configuration layer settings."
      emacs-lisp
      git
      ivy
-     lsp
+     ;; lsp
      markdown
-     multiple-cursors
+     ;; multiple-cursors
      python
      org
      ;; (shell :variables
@@ -52,7 +53,7 @@ This function should only modify configuration layer settings."
      spell-checking
      syntax-checking
      version-control
-     treemacs
+     ;; treemacs
      )
 
 
@@ -64,16 +65,13 @@ This function should only modify configuration layer settings."
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
    dotspacemacs-additional-packages
-   '(
+   '(jdee
      importmagic
      calfw-org
      ivy-todo
      doom-themes
-     circadian
      jedi
-     elpy
-     treemacs-evil
-     )
+     elpy)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -525,14 +523,18 @@ configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
 
+  ;;quick open terminal
+  (define-key evil-normal-state-map (kbd "SPC a t") #'term)
+
+  ;;key bind to duplicate lines
+  (spacemacs/set-leader-keys (kbd "d") 'spacemacs/duplicate-line-or-region)
+
   ;; org mode key binds to quickly jump to various org files
-  (global-set-key (kbd "C-c o") 
-                  (lambda () (interactive) (find-file "~/Notes/organizer.org")))
+  (spacemacs/set-leader-keys (kbd "n n") (lambda () (interactive) (find-file "~/Notes/notes.org")))
 
   ;; key binds to quickly change windows
   (define-key evil-normal-state-map (kbd "C-.") #'other-window)
   (define-key evil-normal-state-map (kbd "C-,") #'prev-window)
-
   (global-set-key (kbd "C-.") #'other-window)
   (global-set-key (kbd "C-,") #'prev-window)
 
@@ -554,8 +556,7 @@ before packages are loaded."
    whitespace-line-column 80
    whitespace-style       '(face lines-tail))
 
-  (add-hook 'prog-mode-hook #'whitespace-mode)
-  )
+  (add-hook 'prog-mode-hook #'whitespace-mode))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
@@ -573,9 +574,9 @@ This function is called at the very end of Spacemacs initialization."
    ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(custom-safe-themes
    (quote
-    ("4417913061aa6623f89864e32fc1ab2b03a41bfb37320fe98821d6a0af7883be" "e453b4778cf166e10db1da8f31b2c14a6eb2e587b667431c93acca4a8e765ba5" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "7a994c16aa550678846e82edc8c9d6a7d39cc6564baaaacc305a3fdc0bd8725f" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "d5a878172795c45441efcd84b20a14f553e7e96366a163f742b95d65a3f55d71" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "711efe8b1233f2cf52f338fd7f15ce11c836d0b6240a18fffffc2cbd5bfe61b0" "1623aa627fecd5877246f48199b8e2856647c99c6acdab506173f9bb8b0a41ac" "79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" "6b80b5b0762a814c62ce858e9d72745a05dd5fc66f821a1c5023b4f2a76bc910" "6c3b5f4391572c4176908bb30eddc1718344b8eaff50e162e36f271f6de015ca" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "5d09b4ad5649fea40249dd937eaaa8f8a229db1cec9a1a0ef0de3ccf63523014" "7b3d184d2955990e4df1162aeff6bfb4e1c3e822368f0359e15e2974235d9fa8" "54cf3f8314ce89c4d7e20ae52f7ff0739efb458f4326a2ca075bf34bc0b4f499" "587938eeeaefd2b2f68a0970e02985246a28c02c1c140cb0943d2b6909c47261" "7d708f0168f54b90fc91692811263c995bebb9f68b8b7525d0e2200da9bc903c" "c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" "730a87ed3dc2bf318f3ea3626ce21fb054cd3a1471dcd59c81a4071df02cb601" "2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "93ed23c504b202cf96ee591138b0012c295338f38046a1f3c14522d4a64d7308" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" "4f01c1df1d203787560a67c1b295423174fd49934deb5e6789abd1e61dba9552" "b5fff23b86b3fd2dd2cc86aa3b27ee91513adaefeaa75adc8af35a45ffb6c499" "3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" "e074be1c799b509f52870ee596a5977b519f6d269455b84ed998666cf6fc802a" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" "5b809c3eae60da2af8a8cfba4e9e04b4d608cb49584cb5998f6e4a1c87c057c4" "71e5acf6053215f553036482f3340a5445aee364fb2e292c70d9175fb0cc8af7" "d74c5485d42ca4b7f3092e50db687600d0e16006d8fa335c69cf4f379dbd0eee" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "9efb2d10bfb38fe7cd4586afb3e644d082cbcdb7435f3d1e8dd9413cbe5e61fc" "cae81b048b8bccb7308cdcb4a91e085b3c959401e74a0f125e7c5b173b916bf9" "01cf34eca93938925143f402c2e6141f03abb341f27d1c2dba3d50af9357ce70" "5036346b7b232c57f76e8fb72a9c0558174f87760113546d3a9838130f1cdb74" "74ba9ed7161a26bfe04580279b8cad163c00b802f54c574bfa5d924b99daa4b9" "8d7684de9abb5a770fbfd72a14506d6b4add9a7d30942c6285f020d41d76e0fa" "f7216d3573e1bd2a2b47a2331f368b45e7b5182ddbe396d02b964b1ea5c5dc27" "37a4701758378c93159ad6c7aceb19fd6fb523e044efe47f2116bc7398ce20c9" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "188fed85e53a774ae62e09ec95d58bb8f54932b3fd77223101d036e3564f9206" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "a3b6a3708c6692674196266aad1cb19188a6da7b4f961e1369a68f06577afa16" "f2927d7d87e8207fa9a0a003c0f222d45c948845de162c885bf6ad2a255babfd" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" default)))
+    ("10461a3c8ca61c52dfbbdedd974319b7f7fd720b091996481c8fb1dded6c6116" "614e5089876ea69b515c50b6d7fa0a37eb7ed50fda224623ec49e1c91a0af6a1" "4ea0aa360264ff861fb0212abe4161b83ad1d8c8b74d8a04bcd1baf0ebdceeae" "868abc288f3afe212a70d24de2e156180e97c67ca2e86ba0f2bf9a18c9672f07" "fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "711efe8b1233f2cf52f338fd7f15ce11c836d0b6240a18fffffc2cbd5bfe61b0" "1623aa627fecd5877246f48199b8e2856647c99c6acdab506173f9bb8b0a41ac" "79278310dd6cacf2d2f491063c4ab8b129fee2a498e4c25912ddaa6c3c5b621e" "e1ef2d5b8091f4953fe17b4ca3dd143d476c106e221d92ded38614266cea3c8b" "7a994c16aa550678846e82edc8c9d6a7d39cc6564baaaacc305a3fdc0bd8725f" "6b80b5b0762a814c62ce858e9d72745a05dd5fc66f821a1c5023b4f2a76bc910" "6c3b5f4391572c4176908bb30eddc1718344b8eaff50e162e36f271f6de015ca" "37144b437478e4c235824f0e94afa740ee2c7d16952e69ac3c5ed4352209eefb" "5d09b4ad5649fea40249dd937eaaa8f8a229db1cec9a1a0ef0de3ccf63523014" "7b3d184d2955990e4df1162aeff6bfb4e1c3e822368f0359e15e2974235d9fa8" "54cf3f8314ce89c4d7e20ae52f7ff0739efb458f4326a2ca075bf34bc0b4f499" "990e24b406787568c592db2b853aa65ecc2dcd08146c0d22293259d400174e37" "587938eeeaefd2b2f68a0970e02985246a28c02c1c140cb0943d2b6909c47261" "7d708f0168f54b90fc91692811263c995bebb9f68b8b7525d0e2200da9bc903c" "c83c095dd01cde64b631fb0fe5980587deec3834dc55144a6e78ff91ebc80b19" "730a87ed3dc2bf318f3ea3626ce21fb054cd3a1471dcd59c81a4071df02cb601" "2cdc13ef8c76a22daa0f46370011f54e79bae00d5736340a5ddfe656a767fddf" "93ed23c504b202cf96ee591138b0012c295338f38046a1f3c14522d4a64d7308" "2f1518e906a8b60fac943d02ad415f1d8b3933a5a7f75e307e6e9a26ef5bf570" "99ea831ca79a916f1bd789de366b639d09811501e8c092c85b2cb7d697777f93" "4f01c1df1d203787560a67c1b295423174fd49934deb5e6789abd1e61dba9552" "b5fff23b86b3fd2dd2cc86aa3b27ee91513adaefeaa75adc8af35a45ffb6c499" "3c2f28c6ba2ad7373ea4c43f28fcf2eed14818ec9f0659b1c97d4e89c99e091e" "bf387180109d222aee6bb089db48ed38403a1e330c9ec69fe1f52460a8936b66" "e074be1c799b509f52870ee596a5977b519f6d269455b84ed998666cf6fc802a" "dde8c620311ea241c0b490af8e6f570fdd3b941d7bc209e55cd87884eb733b0e" "5b809c3eae60da2af8a8cfba4e9e04b4d608cb49584cb5998f6e4a1c87c057c4" "71e5acf6053215f553036482f3340a5445aee364fb2e292c70d9175fb0cc8af7" "d74c5485d42ca4b7f3092e50db687600d0e16006d8fa335c69cf4f379dbd0eee" "be9645aaa8c11f76a10bcf36aaf83f54f4587ced1b9b679b55639c87404e2499" "d5a878172795c45441efcd84b20a14f553e7e96366a163f742b95d65a3f55d71" "9efb2d10bfb38fe7cd4586afb3e644d082cbcdb7435f3d1e8dd9413cbe5e61fc" "cae81b048b8bccb7308cdcb4a91e085b3c959401e74a0f125e7c5b173b916bf9" "01cf34eca93938925143f402c2e6141f03abb341f27d1c2dba3d50af9357ce70" "5036346b7b232c57f76e8fb72a9c0558174f87760113546d3a9838130f1cdb74" "74ba9ed7161a26bfe04580279b8cad163c00b802f54c574bfa5d924b99daa4b9" "8d7684de9abb5a770fbfd72a14506d6b4add9a7d30942c6285f020d41d76e0fa" "3df5335c36b40e417fec0392532c1b82b79114a05d5ade62cfe3de63a59bc5c6" "188fed85e53a774ae62e09ec95d58bb8f54932b3fd77223101d036e3564f9206" "e6ff132edb1bfa0645e2ba032c44ce94a3bd3c15e3929cdf6c049802cf059a2a" "76bfa9318742342233d8b0b42e824130b3a50dcc732866ff8e47366aed69de11" "c4bdbbd52c8e07112d1bfd00fee22bf0f25e727e95623ecb20c4fa098b74c1bd" "a3b6a3708c6692674196266aad1cb19188a6da7b4f961e1369a68f06577afa16" "f2927d7d87e8207fa9a0a003c0f222d45c948845de162c885bf6ad2a255babfd" "4bca89c1004e24981c840d3a32755bf859a6910c65b829d9441814000cf6c3d0" default)))
  '(evil-want-Y-yank-to-eol nil)
- '(fci-rule-color "#7c6f64" t)
+ '(fci-rule-color "#5B6268" t)
  '(gnsi-color-names-vector
    ["#282828" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#cc241d" "#8ec07c" "#ebdbb2"])
  '(hl-todo-keyword-faces
@@ -595,39 +596,39 @@ This function is called at the very end of Spacemacs initialization."
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
      ("\\?\\?\\?+" . "#dc752f"))))
- '(jdee-db-active-breakpoint-face-colors (cons "#0d1011" "#fabd2f"))
- '(jdee-db-requested-breakpoint-face-colors (cons "#0d1011" "#b8bb26"))
- '(jdee-db-spec-breakpoint-face-colors (cons "#0d1011" "#928374"))
- '(objed-cursor-color "#fb4934")
+ '(jdee-db-active-breakpoint-face-colors (cons "#2b2a27" "#ff5d38"))
+ '(jdee-db-requested-breakpoint-face-colors (cons "#2b2a27" "#98be65"))
+ '(jdee-db-spec-breakpoint-face-colors (cons "#2b2a27" "#3f444a"))
+ '(objed-cursor-color "#ff5d38")
  '(org-agenda-files (quote ("~/Notes/todo.org")))
  '(package-selected-packages
    (quote
-    (yapfify stickyfunc-enhance pytest pyenv-mode py-isort pippel pipenv pip-requirements lsp-python-ms lsp-pyright live-py-mode importmagic helm-pydoc helm-gtags helm-cscope helm xcscope helm-core ggtags dap-mode posframe bui cython-mode counsel-gtags company-anaconda blacken anaconda-mode pythonic doom-themes yasnippet-snippets ws-butler writeroom-mode winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package unfill treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection spaceline-all-the-icons smex restart-emacs request rainbow-delimiters popwin pcre2el password-generator paradox overseer org-superstar org-projectile org-present org-pomodoro org-mime org-download org-cliplink org-brain open-junk-file nameless mwim move-text mmm-mode markdown-toc macrostep lsp-ui lsp-treemacs lsp-origami lsp-ivy lorem-ipsum link-hint jedi ivy-yasnippet ivy-xref ivy-purpose ivy-hydra indent-guide hybrid-mode hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers helm-make google-translate golden-ratio gnuplot gh-md fuzzy font-lock+ flycheck-pos-tip flycheck-package flycheck-elsa flx-ido fill-column-indicator fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elpy elisp-slime-nav editorconfig dumb-jump dotenv-mode diminish devdocs define-word counsel-projectile column-enforce-mode clean-aindent-mode circadian centered-cursor-mode auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent ace-link ac-ispell)))
- '(pdf-view-midnight-colors (cons "#ebdbb2" "#282828"))
+    (jdee auto-save-buffers-enhanced org-notebook org-journal web-beautify tide typescript-mode tern prettier-js nodejs-repl livid-mode skewer-mode js2-refactor multiple-cursors js2-mode js-doc import-js grizzl impatient-mode simple-httpd helm-gtags helm helm-core ggtags dap-mode posframe bui counsel-gtags add-node-modules-path doom-gruvbox-theme yapfify ws-butler winum which-key wgrep volatile-highlights vi-tilde-fringe uuidgen use-package unfill toc-org spaceline powerline smex smeargle restart-emacs request rainbow-delimiters pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox spinner orgit org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-plus-contrib org-mime org-download org-bullets open-junk-file neotree mwim move-text mmm-mode markdown-toc markdown-mode magit-gitflow magit-popup macrostep lorem-ipsum live-py-mode linum-relative link-hint jedi jedi-core python-environment ivy-todo ivy-hydra indent-guide importmagic epc ctable concurrent deferred hydra lv hy-mode dash-functional hungry-delete htmlize hl-todo highlight-parentheses highlight-numbers parent-mode helm-make google-translate golden-ratio gnuplot gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter gh-md fuzzy flyspell-correct-ivy flyspell-correct flycheck-pos-tip pos-tip flycheck flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist highlight evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit git-commit with-editor transient evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg undo-tree eval-sexp-fu elpy pyvenv highlight-indentation elisp-slime-nav dumb-jump doom-themes diminish diff-hl define-word cython-mode counsel-projectile projectile pkg-info epl counsel swiper ivy company-statistics company-anaconda company column-enforce-mode clean-aindent-mode circadian calfw-org bind-map bind-key auto-yasnippet yasnippet auto-highlight-symbol auto-dictionary auto-compile packed async anaconda-mode pythonic f dash s aggressive-indent adaptive-wrap ace-window ace-link avy ac-ispell auto-complete popup)))
+ '(pdf-view-midnight-colors (cons "#ede0ce" "#2b2a27"))
  '(rustic-ansi-faces
-   ["#282828" "#fb4934" "#b8bb26" "#fabd2f" "#83a598" "#cc241d" "#8ec07c" "#ebdbb2"])
+   ["#2b2a27" "#ff5d38" "#98be65" "#bcd42a" "#51afef" "#c678dd" "#46D9FF" "#ede0ce"])
  '(send-mail-function (quote smtpmail-send-it))
- '(vc-annotate-background "#282828")
+ '(vc-annotate-background "#2b2a27")
  '(vc-annotate-color-map
    (list
-    (cons 20 "#b8bb26")
-    (cons 40 "#cebb29")
-    (cons 60 "#e3bc2c")
-    (cons 80 "#fabd2f")
-    (cons 100 "#fba827")
-    (cons 120 "#fc9420")
-    (cons 140 "#fe8019")
-    (cons 160 "#ed611a")
-    (cons 180 "#dc421b")
-    (cons 200 "#cc241d")
-    (cons 220 "#db3024")
-    (cons 240 "#eb3c2c")
-    (cons 260 "#fb4934")
-    (cons 280 "#e05744")
-    (cons 300 "#c66554")
-    (cons 320 "#ac7464")
-    (cons 340 "#7c6f64")
-    (cons 360 "#7c6f64")))
+    (cons 20 "#98be65")
+    (cons 40 "#a4c551")
+    (cons 60 "#b0cc3d")
+    (cons 80 "#bcd42a")
+    (cons 100 "#c1a623")
+    (cons 120 "#c5781c")
+    (cons 140 "#cb4b16")
+    (cons 160 "#c95a58")
+    (cons 180 "#c7699a")
+    (cons 200 "#c678dd")
+    (cons 220 "#d96fa6")
+    (cons 240 "#ec666f")
+    (cons 260 "#ff5d38")
+    (cons 280 "#cf563c")
+    (cons 300 "#9f5041")
+    (cons 320 "#6f4a45")
+    (cons 340 "#5B6268")
+    (cons 360 "#5B6268")))
  '(vc-annotate-very-old-color nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
